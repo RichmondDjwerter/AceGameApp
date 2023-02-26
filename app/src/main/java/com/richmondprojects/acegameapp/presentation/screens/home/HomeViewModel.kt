@@ -1,4 +1,4 @@
-package com.richmondprojects.acegameapp.presentation.home
+package com.richmondprojects.acegameapp.presentation.screens.home
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
