@@ -41,7 +41,9 @@ class MainActivity : ComponentActivity() {
                         scaffoldState = scaffoldState,
                         navController = navController,
                         availableGames = availableGames,
-                        onGameClicked = {},
+                        onGameClicked = { gameId ->
+                            navController.navigate("detail_screen/$gameId")
+                        },
                         onOpenDrawer = {
                             scope.launch { scaffoldState.drawerState.open() }
                         },

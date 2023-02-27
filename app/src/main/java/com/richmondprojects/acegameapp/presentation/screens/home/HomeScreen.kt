@@ -11,9 +11,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.richmondprojects.acegameapp.R
 import com.richmondprojects.acegameapp.domain.model.Games
 import com.richmondprojects.acegameapp.domain.util.Resource
@@ -27,9 +31,11 @@ fun HomeScreen(
     onOpenDrawer: () -> Unit,
     onSearchOpen: () -> Unit,
     availableGames: Resource<List<Games>>,
-    onGameClicked: () -> Unit
+    onGameClicked: (Int) -> Unit
 ) {
     availableGames.data?.let { games ->
+        val screenHeight = LocalContext.current.resources.displayMetrics.heightPixels.dp /
+                LocalDensity.current.density
         if (games.isEmpty()) {
             Box(modifier = Modifier.fillMaxSize()) {
                 Icon(
@@ -59,6 +65,7 @@ fun HomeScreen(
                             tint = MaterialTheme.colorScheme.onBackground
                         )
                     }
+                    Text(text = "Ace Game App", fontWeight = FontWeight.Bold, fontSize = 20.sp)
                     IconButton(onClick = { onSearchOpen() }) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_magnifying_glass_solid),
@@ -80,9 +87,12 @@ fun HomeScreen(
                         )
                         Spacer(modifier = Modifier.height(10.dp))
                     }
-                    items(items = games) {game ->
-                        GameCard(games = game,
-                            onClick = { onGameClicked() })
+                    items(items = games) { game ->
+                        GameCard(
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .requiredHeight(height = screenHeight * 0.45f), games = game,
+                            onClick = { onGameClicked(game.id) })
                     }
                 }
             }

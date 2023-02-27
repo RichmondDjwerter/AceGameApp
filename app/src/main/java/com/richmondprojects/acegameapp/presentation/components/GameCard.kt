@@ -59,22 +59,32 @@ fun GameCard(
                 })
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth().fillMaxHeight()
                     .padding(3.dp), verticalArrangement = Arrangement.SpaceAround
             ) {
-                Text(
-                    text = games.title,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 18.sp,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Text(text = "Developer: ${games.developer}", fontWeight = FontWeight.Light)
-                Text(
-                    text = "Developer: ${games.short_description}",
-                    fontWeight = FontWeight.Light,
-                    overflow = TextOverflow.Ellipsis
-                )
+                Column {
+                    Text(
+                        text = games.title,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 18.sp,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier
+                            .padding(all = 5.dp)
+                            .align(alignment = Alignment.CenterHorizontally),
+                    )
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth(fraction = 0.95f)
+                            .fillMaxHeight(fraction = 0.6f)
+                    ) {
+                        Text(
+                            text = games.short_description,
+                            modifier = Modifier.fillMaxWidth(fraction = 0.85f),
+                            overflow = TextOverflow.Ellipsis, maxLines = 5
+                        )
+                    }
+                }
                 Row(
                     horizontalArrangement = Arrangement.End,
                     verticalAlignment = Alignment.CenterVertically,
@@ -88,9 +98,9 @@ fun GameCard(
                             Text(
                                 modifier = Modifier.padding(all = 5.dp),
                                 text = games.genre,
-                                style = MaterialTheme.typography.headlineMedium,
+                                style = MaterialTheme.typography.bodyMedium,
                             )
-                        }, onClick = {}
+                        }, onClick = {}, shape = MaterialTheme.shapes.extraLarge
                     )
                     Spacer(modifier = Modifier.padding(end = 3.dp))
                     Platform(text = games.platform)
