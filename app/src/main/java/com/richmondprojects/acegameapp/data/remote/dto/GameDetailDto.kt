@@ -1,5 +1,7 @@
 package com.richmondprojects.acegameapp.data.remote.dto
 
+import com.richmondprojects.acegameapp.domain.model.GameDetails
+
 data class GameDetailDto(
     val description: String,
     val developer: String,
@@ -16,4 +18,24 @@ data class GameDetailDto(
     val status: String,
     val thumbnail: String,
     val title: String
-)
+) {
+    fun toGameDetailsDomain(): GameDetails {
+        return GameDetails(
+            description = description,
+            developer = developer,
+            freetogame_profile_url = freetogame_profile_url,
+            game_url = game_url,
+            genre = genre,
+            id = id,
+            minimum_system_requirements = minimum_system_requirements.toMinRequirementDomain(),
+            platform = platform,
+            publisher = publisher,
+            release_date = release_date,
+            screenshots = screenshots.map { it.toScreenshotDomain() },
+            short_description = short_description,
+            status = status,
+            thumbnail = thumbnail,
+            title = title
+        )
+    }
+}

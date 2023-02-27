@@ -1,6 +1,7 @@
 package com.richmondprojects.acegameapp.data.repository
 
 import com.richmondprojects.acegameapp.data.remote.api.Api
+import com.richmondprojects.acegameapp.domain.model.GameDetails
 import com.richmondprojects.acegameapp.domain.model.Games
 import com.richmondprojects.acegameapp.domain.repository.Repository
 import com.richmondprojects.acegameapp.domain.util.Resource
@@ -19,6 +20,17 @@ class RepositoryImplementation @Inject constructor(
             )
             is Resource.Error -> Resource.Error(message = response.message)
             is Resource.Loading -> Resource.Loading()
+        }
+    }
+
+    override suspend fun getGameDetail(id: Int): Resource<GameDetails?> {
+        val response = invokeApi {
+            api.getGameDetail(id)
+        }
+        return when (response) {
+            is Resource.Loading -> Resource.Loading()
+            is Resource.Error -> Resource.Error(message = response.message)
+            is Resource.Success -> Resource.Success(data = response.data?.toGameDetailsDomain())
         }
     }
 }

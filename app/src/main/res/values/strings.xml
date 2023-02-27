@@ -6,7 +6,7 @@
     <string name="lbl_latest_games">Latest games</string>
     <string name="wrn_no_games">Oops…! it seems that there is no games for the moment please try again</string>
     <string name="lbl_about">About</string>
-    <string name="lbl_detail">detail</string>
+    <string name="lbl_detail">(%1$s) detail</string>
     <string name="lbl_extra">Extra</string>
     <string name="lbl_title">Title</string>
     <string name="lbl_developer">Developer</string>
