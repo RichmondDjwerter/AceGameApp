@@ -37,26 +37,22 @@ fun GameDetail(
     val gameTitleState by viewModel.gameTitle
 
     Column(modifier = Modifier.fillMaxSize()) {
-        NavBar(
-            title = stringResource(id = R.string.lbl_detail, gameTitleState),
+        NavBar(title = stringResource(id = R.string.lbl_detail, gameTitleState),
             onBackPressed = { navController.navigateUp() })
         Spacer(modifier = Modifier.height(20.dp))
-
         StateHandler(
             state = gameDetailState,
             onLoading = { LoadingGameDetail(onLoading = { viewModel.setGameTitle(TITLE) }) },
             onFailure = { WarningMessage(textId = R.string.txt_empty_result) }
         ) { resource ->
             resource.data?.let { gameDetails ->
-                viewModel.setGameTitle(gameDetails.title)
-
                 val screenHeight = LocalContext.current.resources.displayMetrics.heightPixels.dp /
                         LocalDensity.current.density
-
+                viewModel.setGameTitle(gameDetails.title)
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .verticalScroll(rememberScrollState())
+                        .verticalScroll(rememberScrollState()).padding(12.dp)
                 ) {
                     if (gameDetails.screenshots.isEmpty()) {
                         NetworkImage(
@@ -68,7 +64,7 @@ fun GameDetail(
                                 .requiredHeight(height = screenHeight * 0.6f)
                                 .padding(vertical = 8.dp, horizontal = 12.dp)
                                 .align(alignment = Alignment.CenterHorizontally)
-                                .clip(shape = MaterialTheme.shapes.medium),
+                                .clip(shape = MaterialTheme.shapes.large),
                             onLoading = {
                                 ConstraintLayout(modifier = Modifier.fillMaxSize()) {
                                     val indicatorRef = createRef()
@@ -78,18 +74,16 @@ fun GameDetail(
                                             bottom.linkTo(parent.bottom)
                                             start.linkTo(parent.start)
                                             end.linkTo(parent.end)
-                                        }
-                                    )
+                                        })
                                 }
                             },
                             onError = {
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_warning),
-                                    contentDescription = "",
+                                    contentDescription = "Warning Logo",
                                     tint = MaterialTheme.colorScheme.error
                                 )
-                            }
-                        )
+                            })
                     } else {
                         CarouselView(
                             urls = gameDetails.screenshots.map { it.image },
@@ -98,16 +92,14 @@ fun GameDetail(
                                 .requiredHeight(height = screenHeight * 0.6f)
                                 .padding(vertical = 8.dp, horizontal = 12.dp)
                                 .align(alignment = Alignment.CenterHorizontally),
-                            shape = MaterialTheme.shapes.medium,
-                            crossFade = 1000
+                            shape = MaterialTheme.shapes.medium, crossFade = 1000
                         )
                     }
                     Spacer(modifier = Modifier.height(height = 30.dp))
                     Column(modifier = Modifier.padding(horizontal = 5.dp)) {
-
                         Text(
                             text = stringResource(id = R.string.lbl_about, gameDetails.title),
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = MaterialTheme.typography.titleLarge,
                             color = MaterialTheme.colorScheme.onBackground,
                             modifier = Modifier.padding(vertical = 10.dp)
                         )
@@ -120,7 +112,7 @@ fun GameDetail(
                         Spacer(modifier = Modifier.height(height = 30.dp))
                         Text(
                             text = stringResource(id = R.string.lbl_extra),
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = MaterialTheme.typography.titleLarge,
                             color = MaterialTheme.colorScheme.onBackground,
                             modifier = Modifier.padding(vertical = 10.dp)
                         )
@@ -165,7 +157,7 @@ fun GameDetail(
                         gameDetails.minimum_system_requirements.let { minimumSystemRequirements ->
                             Text(
                                 text = stringResource(id = R.string.lbl_msr),
-                                style = MaterialTheme.typography.bodyMedium,
+                                style = MaterialTheme.typography.titleLarge,
                                 color = MaterialTheme.colorScheme.onSurface
                             )
                             Spacer(modifier = Modifier.height(height = 20.dp))
@@ -223,17 +215,14 @@ fun GameDetail(
                             )
                             Spacer(modifier = Modifier.height(height = 30.dp))
                         }
+                        LeadingIconButton(
+                            modifier = Modifier.align(alignment = Alignment.CenterHorizontally),
+                            iconResId = R.drawable.ic_sign_in_alt_solid,
+                            textButton = stringResource(id = R.string.lbl_play_the_game),
+                            onClick = { onPlayTheGameClicked(gameDetails.game_url) })
+                        Spacer(modifier = Modifier.height(height = 20.dp))
                     }
                 }
-                LeadingIconButton(
-                    modifier = Modifier.align(alignment = Alignment.CenterHorizontally),
-                    iconResId = R.drawable.ic_sign_in_alt_solid,
-                    textButton = stringResource(id = R.string.lbl_play_the_game),
-                    onClick = {
-                        onPlayTheGameClicked(gameDetails.game_url)
-                    }
-                )
-                Spacer(modifier = Modifier.height(height = 20.dp))
             }
         }
     }

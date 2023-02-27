@@ -85,13 +85,13 @@ fun HomeScreen(
                             shape = MaterialTheme.shapes.large,
                             crossFade = 1000
                         )
-                        Spacer(modifier = Modifier.height(10.dp))
+                        Spacer(modifier = Modifier.height(30.dp))
                     }
                     items(items = games) { game ->
                         GameCard(
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .requiredHeight(height = screenHeight * 0.45f), games = game,
+                            modifier = Modifier.padding(8.dp)
+                                .requiredHeight(height = screenHeight * 0.45f),
+                            games = game,
                             onClick = { onGameClicked(game.id) })
                     }
                 }

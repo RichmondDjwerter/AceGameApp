@@ -12,6 +12,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.richmondprojects.acegameapp.presentation.screens.base.Index
@@ -31,6 +32,7 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             val availableGames by viewModel.games.collectAsState()
             val scope = rememberCoroutineScope()
+            val uriHandler = LocalUriHandler.current
             AceGameAppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
@@ -47,7 +49,10 @@ class MainActivity : ComponentActivity() {
                         onOpenDrawer = {
                             scope.launch { scaffoldState.drawerState.open() }
                         },
-                        onSearchClicked = {}
+                        onSearchClicked = {},
+                        onPlayTheGameClicked = { gameUrl ->
+                            uriHandler.openUri(uri = gameUrl)
+                        }
                     )
                 }
             }

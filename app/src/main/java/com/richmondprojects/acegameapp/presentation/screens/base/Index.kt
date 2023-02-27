@@ -8,7 +8,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
@@ -35,7 +34,8 @@ fun Index(
     availableGames: Resource<List<Games>>,
     onOpenDrawer: () -> Unit,
     onSearchClicked: () -> Unit,
-    onGameClicked: (Int) -> Unit
+    onGameClicked: (Int) -> Unit,
+    onPlayTheGameClicked: (String) -> Unit
 ) {
     Scaffold(
         scaffoldState = scaffoldState,
@@ -50,12 +50,11 @@ fun Index(
                         contentAlignment = Alignment.Center
                     ) {
                         Image(
-                            modifier = Modifier.size(150.dp),
-                            painter = painterResource(id = com.richmondprojects.acegameapp.R.drawable.ic_free_to_play_launcher),
+                            modifier = Modifier.fillMaxSize(),
+                            painter = painterResource(id = com.richmondprojects.acegameapp.R.drawable.perfect),
                             contentDescription = "App Logo",
                             contentScale = ContentScale.FillHeight,
                             alignment = Alignment.Center,
-                            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
                         )
                     }
 
@@ -129,9 +128,12 @@ fun Index(
             }
             composable(Screens.DetailScreen.route) {
                 val viewModel = hiltViewModel<DetailViewModel>()
-                GameDetail(viewModel)
+                GameDetail(
+                    viewModel, navController,
+                    onPlayTheGameClicked = { gameUrl ->
+                        onPlayTheGameClicked(gameUrl)
+                    })
             }
-
         }
     }
 }

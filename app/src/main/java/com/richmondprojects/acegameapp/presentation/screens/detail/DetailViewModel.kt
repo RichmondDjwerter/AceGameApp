@@ -21,7 +21,7 @@ class DetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val _gameDetailState: MutableStateFlow<Resource<GameDetails?>> =
-        MutableStateFlow(Resource.Loading())
+        MutableStateFlow(value=Resource.Loading())
     val gameDetailState: StateFlow<Resource<GameDetails?>>
         get() = _gameDetailState
 
