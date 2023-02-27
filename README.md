@@ -4,7 +4,9 @@
 
 
 Android App that shows a list of various video games from https://www.freetogame.com
+
 This Application does not make use of Local caching
+
 Application still underconstruction, everything seen in the forthcoming demo works just fine!
 
 
@@ -18,4 +20,4 @@ Application still underconstruction, everything seen in the forthcoming demo wor
 
 Splash_Screen -> Main_Screen->Navigation_drawer->Game_Detail_screen
 
-Images Seen in this Application were taken from https://www.Unsplash.com
+Extra Images Seen in this Application were taken from https://www.Unsplash.com
